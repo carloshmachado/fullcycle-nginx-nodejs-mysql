@@ -1,6 +1,12 @@
 const express = require('express')
 const mysql = require('mysql')
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 const app = express()
 const port = 3000
 const config = {
@@ -12,6 +18,7 @@ const config = {
 let connection
 
 async function connect() {
+  await sleep(3000);
   connection = mysql.createConnection(config)
   const sqlTable = `CREATE TABLE people (
     id int NOT NULL AUTO_INCREMENT,
@@ -24,6 +31,9 @@ async function connect() {
 }
 
 app.get('/', (req,res) => {
+  if(connection.state === 'disconnected'){
+    return res.send(`Aguarde a conexão com o mysql ser estabelecida` )
+  }
   const sql = `INSERT INTO people(name) values('Carlos')`
   connection.query(sql)
   connection.query('select * from people', (error, results, fields) => {
