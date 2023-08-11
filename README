@@ -1,0 +1,2 @@
+docker-compose up -d --build
+verificar proxy_pass http://172.29.0.4:3000 para o ip gerado pela network node-network
