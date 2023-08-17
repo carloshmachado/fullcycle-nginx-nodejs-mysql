@@ -1,7 +1,6 @@
 FROM node:18-alpine
 
 WORKDIR /usr/src/app
-COPY . .
 ENV DOCKERIZE_VERSION v0.7.0
 
 RUN apk update --no-cache \
@@ -10,8 +9,5 @@ RUN apk update --no-cache \
     && apk del wget
 
 RUN apk update && apk add bash \
-  && npm install
-
-EXPOSE 3000
-
-CMD ["node", "index.js"]
+# COPY . .
+# RUN npm install
